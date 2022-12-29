@@ -1,9 +1,10 @@
+import Expenses from "./components/expenses/Expenses";
 
-function App() {
+
+const App = () => {
     return (
         <div className="App">
-
-
+            <Expenses/>
         </div>
     );
 }
