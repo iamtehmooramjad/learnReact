@@ -1,16 +1,17 @@
 import React from 'react';
-import "./Card.css"
+import styled from 'styled-components'
 
-/***
- * 1. Custom components by default do not wrap children, so to wrap children in custom component, add {props.children} to wrapper.
- * 2. To apply styles where custom component is imported. add classes to the custom component
- * */
+const Container = styled.div`
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+`;
+
 const Card = (props) => {
-    const classes = 'card '+ props.className
     return (
-        <div className={classes}>
+        <Container style={props.style}>
             {props.children}
-        </div>
+        </Container>
     );
 };
 
