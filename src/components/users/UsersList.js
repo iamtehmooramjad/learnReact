@@ -11,7 +11,7 @@ const List = styled.ul`
 const Item = styled.li`
   border: 1px solid #ccc;
   margin: 0.5rem 0;
-  padding: 0.5rem;
+  padding: 0.5rem; 
 `;
 
 const UsersList = props => {
