@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import Card from "./Card";
 import Button from "./Button";
+import ReactDOM from "react-dom";
 
 
 const HeaderContainer = styled.header`
@@ -28,7 +29,7 @@ const FooterContainer = styled.footer`
   justify-content: flex-end;
 `;
 
-const Backdrop = styled.div`
+const BackdropContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -38,7 +39,11 @@ const Backdrop = styled.div`
   background: rgba(0, 0, 0, 0.75);
 `;
 
-const ErrorModal = (props) => {
+const Backdrop = props => {
+    return <BackdropContainer onClick={props.onConfirm}/>
+}
+
+const ModalOverlay = props => {
     const cardStyle = {
         position: "fixed",
         top: "30vh",
@@ -47,21 +52,32 @@ const ErrorModal = (props) => {
         zIndex: "100",
         overflow: "hidden"
     }
+
+    return <Card style={cardStyle}>
+        <HeaderContainer>
+            <Header>{props.title}</Header>
+        </HeaderContainer>
+        <ContentContainer>
+            <Message>{props.message}</Message>
+        </ContentContainer>
+        <FooterContainer>
+            <Button onClick={props.onConfirm}>Okay</Button>
+        </FooterContainer>
+    </Card>
+}
+
+const ErrorModal = (props) => {
+
     return (
-        <div>
-            <Backdrop onClick={props.onConfirm}/>
-            <Card style={cardStyle}>
-                <HeaderContainer>
-                    <Header>{props.title}</Header>
-                </HeaderContainer>
-                <ContentContainer>
-                    <Message>{props.message}</Message>
-                </ContentContainer>
-                <FooterContainer>
-                    <Button onClick={props.onConfirm}>Okay</Button>
-                </FooterContainer>
-            </Card>
-        </div>
+        <React.Fragment>
+            {ReactDOM.createPortal(
+                <Backdrop onConfirm={props.onConfirm}/>,
+                document.getElementById('backdrop-root'))}
+
+            {ReactDOM.createPortal(
+                <ModalOverlay title={props.title} message={props.message} onConfirm={props.onConfirm}/>,
+                document.getElementById('overlay-root'))}
+        </React.Fragment>
 
     );
 };
